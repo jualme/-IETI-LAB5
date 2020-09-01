@@ -1,0 +1,25 @@
+
+.card {
+    border: 1px solid lightsteelblue;
+    margin: auto;
+    text-align: center;
+}
+
+.grid-container{
+    spacing: 2;
+    direction-xs-column: 'row';
+    justify: 'flex-start';
+    alignItems: 'flex-start';
+}
+
+.grid-item{
+    margin: auto;
+}
+
+.todo-form {
+    border: 1px solid lightsteelblue;
+    margin: auto;
+    width: 60%;
+    padding: 20px;
+    text-align: center;
+}
