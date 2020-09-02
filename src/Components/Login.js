@@ -21,6 +21,7 @@ export class Login extends React.Component{
         this.handleOnChangePassword = this.handleOnChangePassword.bind(this);
         localStorage.setItem("email","juanM@mail.com");
         localStorage.setItem("password","ieti2020")
+        localStorage.setItem("name","Juan Mejia");
     }
 
     render(){

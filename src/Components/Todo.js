@@ -12,8 +12,9 @@ export class Todo extends React.Component {
             <Grid item xs={12} sm={6} md={3} mt={3} className="grid-item" >
                 <Card className="card">
                     <CardContent>
-                        <Typography>{this.props.text}</Typography>
-                        <Typography>{this.props.priority}</Typography>
+                        <Typography>{this.props.description}</Typography>
+                        <Typography>{this.props.status}</Typography>
+                        <Typography>{this.props.responsible.name}</Typography>
                         <Typography>{this.props.dueDate.format('DD-MM-YYYY')}</Typography>
                     </CardContent>
                 </Card>

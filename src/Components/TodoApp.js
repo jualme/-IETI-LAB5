@@ -10,27 +10,32 @@ import TextField from '@material-ui/core/TextField';
 import './Todo.css'
 
 
-export class TodoApp extends React.Component{
+export class TodoApp extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {items: [], text: '', priority: 0, dueDate: moment()};
-        this.handleTextChange = this.handleTextChange.bind(this);
-        this.handlePriorityChange = this.handlePriorityChange.bind(this);
+        this.state = {
+            items: [],
+            description: '',
+            responsible: {name: localStorage.getItem("name"), email: localStorage.getItem("email")},
+            status: '',
+            dueDate: moment()
+        };
+        this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+        this.handleStatusChange = this.handleStatusChange.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-
     }
 
-    handleTextChange(e) {
+    handleDescriptionChange(e) {
         this.setState({
-            text: e.target.value
+            description: e.target.value
         });
     }
 
-    handlePriorityChange(e) {
+    handleStatusChange(e) {
         this.setState({
-            priority: e.target.value
+            status: e.target.value
         });
     }
 
@@ -43,19 +48,20 @@ export class TodoApp extends React.Component{
     handleSubmit(e) {
         e.preventDefault();
 
-        if (!this.state.text.length || !this.state.priority.length || !this.state.dueDate)
+        if (!this.state.description.length || !this.state.status.length || !this.state.dueDate)
             return;
 
         const newItem = {
-            text: this.state.text,
-            priority: this.state.priority,
+            description: this.state.description,
+            status: this.state.status,
+            responsible: this.state.responsible,
             dueDate: this.state.dueDate,
 
         };
         this.setState(prevState => ({
             items: prevState.items.concat(newItem),
-            text: '',
-            priority: '',
+            description: '',
+            status: '',
             dueDate: ''
         }));
     }
@@ -69,21 +75,21 @@ export class TodoApp extends React.Component{
                     <h3>New TODO</h3>
 
                     <FormControl margin="normal" required fullWidth>
-                        <InputLabel htmlFor="text">Text:</InputLabel>
-                        <Input id="text" name="text"
-                               autoComplete="text" autoFocus
-                               value={this.state.text}
-                               onChange = {this.handleTextChange} />
+                        <InputLabel htmlFor="description">Description:</InputLabel>
+                        <Input id="description" name="description"
+                               autoComplete="description" autoFocus
+                               value={this.state.description}
+                               onChange={this.handleDescriptionChange}/>
                     </FormControl>
 
                     <br/>
                     <br/>
                     <FormControl margin="normal" required fullWidth>
-                        <InputLabel htmlFor="priority">Priority:</InputLabel>
-                        <Input id="priority" name="priority"
-                               autoComplete="priority" autoFocus
-                               value={this.state.priority}
-                               onChange = {this.handlePriorityChange} />
+                        <InputLabel htmlFor="status">Status:</InputLabel>
+                        <Input id="status" name="status"
+                               autoComplete="status" autoFocus
+                               value={this.state.status}
+                               onChange={this.handleStatusChange}/>
                     </FormControl>
 
                     <br/>
@@ -93,7 +99,7 @@ export class TodoApp extends React.Component{
                         label="Due date"
                         type="date"
                         defaultValue="2020-01-01"
-                        InputLabelProps={{shrink: true,required: true}}
+                        InputLabelProps={{shrink: true, required: true}}
                         onChange={this.handleDateChange}
                         fullWidth
                     />
