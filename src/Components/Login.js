@@ -37,7 +37,7 @@ export class Login extends React.Component{
                         <form className="form" onSubmit={this.handleSubmit}>
                             <FormControl margin="normal" required fullWidth>
                                 <InputLabel htmlFor="email">Email Address</InputLabel>
-                                <Input id="email" name="email" autoComplete="email" autoFocus onChange = {this.handleOnChangeEmail}  />
+                                <Input id="email" name="email" autoComplete="email" type="email" autoFocus onChange = {this.handleOnChangeEmail}  />
                             </FormControl>
                             <FormControl margin="normal" required fullWidth>
                                 <InputLabel htmlFor="password">Password</InputLabel>

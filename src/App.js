@@ -12,7 +12,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoggedIn: true
+      isLoggedIn: false
     }
     localStorage.setItem("isLoggedIn",false);
     this.changeIsLoggedIn = this.changeIsLoggedIn.bind(this);
