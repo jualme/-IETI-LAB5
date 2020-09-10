@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import logo from './logo.svg';
 import {Login} from './Components/Login'
-import {TodoApp} from "./Components/TodoApp";
 import DrawerTodo from "./Components/DrawerTodo"
 import './App.css';
 import {BrowserRouter as Router, Route, Redirect,} from 'react-router-dom';
+import NewTask from "./Components/NewTask";
+import TaskList from "./Components/TaskList"
+import UserProfile from "./Components/UserProfile";
 
 
 class App extends Component {
@@ -12,7 +14,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoggedIn: false
+      isLoggedIn: true
     }
     localStorage.setItem("isLoggedIn",false);
     this.changeIsLoggedIn = this.changeIsLoggedIn.bind(this);
@@ -22,6 +24,7 @@ class App extends Component {
         this.setState({ isLoggedIn : !this.state.isLoggedIn });
         localStorage.setItem("isLoggedIn", this.state.isLoggedIn);
     }
+
 
   render() {
       const LoginView = () => (
@@ -38,11 +41,13 @@ class App extends Component {
                       <h1 className="App-title">Task Planner</h1>
                   </header>
                   <ul>
-                      {(this.state.isLoggedIn)?<Redirect to={{pathname: "/todo"}}/>:<div></div>}
+
                   </ul>
                   <div>
                       <Route exact path="/" component={LoginView}/>
-                      <Route path="/todo" component={TodoApp}/>
+                      <Route exact path="/newTask" component={NewTask}/>
+                      <Route exact path="/tasks" component={TaskList}/>
+                      <Route exact path="/profile" component={UserProfile}/>
                   </div>
               </div>
           </Router>

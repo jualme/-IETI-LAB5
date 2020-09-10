@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
 import UserCard from "./UserCard";
+import { Link } from 'react-router-dom';
 
 class DrawerTodo extends Component {
 
@@ -30,6 +31,11 @@ class DrawerTodo extends Component {
                 <Button style={{color: "white", position: "absolute", backgroundColor:"grey", left:"5%" ,top:"75px"}} onClick={this.toggleDrawer(true)}>Menú</Button>
                 <Drawer anchor='left' open={this.state.open} onClose={this.toggleDrawer(false)}>
                     <UserCard/>
+                    <Link to={{pathname:"/tasks"}}>
+                        <Button>
+                                Tasks
+                        </Button>
+                    </Link>
                     <Button onClick={this.logout}>Logout</Button>
                 </Drawer>
             </div>

@@ -4,6 +4,7 @@ import CardHeader from "@material-ui/core/CardHeader";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import {Link} from "react-router-dom";
 
 class UserCard extends Component {
 
@@ -23,9 +24,11 @@ class UserCard extends Component {
                             </Avatar>
                         }
                         action={
-                            <IconButton aria-label="settings">
-                                <MoreVertIcon/>
-                            </IconButton>
+                            <Link to={{pathname:"/profile"}}>
+                                <IconButton aria-label="settings">
+                                    <MoreVertIcon />
+                                </IconButton>
+                            </Link>
                         }
                         title={localStorage.getItem("name")}
                         subheader= {localStorage.getItem("email")}

@@ -3,9 +3,9 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import './Todo.css';
+import './Tasks.css';
 
-export class Todo extends React.Component {
+export class Task extends React.Component {
 
     render() {
         return (
@@ -15,7 +15,7 @@ export class Todo extends React.Component {
                         <Typography>{this.props.description}</Typography>
                         <Typography>{this.props.status}</Typography>
                         <Typography>{this.props.responsible.name}</Typography>
-                        <Typography>{this.props.dueDate.format('DD-MM-YYYY')}</Typography>
+                        <Typography>{this.props.dueDate}</Typography>
                     </CardContent>
                 </Card>
             </Grid>
@@ -23,3 +23,5 @@ export class Todo extends React.Component {
     }
 
 }
+
+export default Task
