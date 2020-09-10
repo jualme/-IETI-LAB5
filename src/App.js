@@ -14,7 +14,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoggedIn: true
+      isLoggedIn: true,
+        select:"home",
     }
     localStorage.setItem("isLoggedIn",false);
     this.changeIsLoggedIn = this.changeIsLoggedIn.bind(this);
@@ -24,6 +25,7 @@ class App extends Component {
         this.setState({ isLoggedIn : !this.state.isLoggedIn });
         localStorage.setItem("isLoggedIn", this.state.isLoggedIn);
     }
+
 
 
   render() {

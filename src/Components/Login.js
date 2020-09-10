@@ -77,6 +77,7 @@ export class Login extends React.Component{
         event.preventDefault();
         if(localStorage.getItem("email") === this.state.email && localStorage.getItem("password") === this.state.password){
             this.props.changeIsLoggedIn();
+            window.location.href = "/tasks";
         }
     }
 }

@@ -6,6 +6,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import SearchIcon from '@material-ui/icons/Search';
+import Fab from '@material-ui/core/Fab';
 
 class TaskFilter extends Component {
 
@@ -123,9 +125,10 @@ class TaskFilter extends Component {
 
         return (
             <div>
-                <button type="button" onClick={this.handleOpen}>
-                    filter
-                </button>
+                <Fab color="primary" aria-label="add" onClick={this.handleOpen}>
+                    <SearchIcon />
+                </Fab>
+
                 <Modal
                     style={{display:'flex', alignItems: "center", justifyContent: "center" }}
                     open={this.state.open}

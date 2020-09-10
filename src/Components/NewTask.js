@@ -14,6 +14,7 @@ class NewTask extends Component {
         this.state = {
             description: '',
             status: '',
+            responsible:"",
             dueDate: moment()
         }
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
@@ -39,6 +40,12 @@ class NewTask extends Component {
         });
     }
 
+    handleResponsibleChange = (e) => {
+        this.setState({
+            responsible: e.target.value
+        });
+    }
+
     render() {
         return (
             <div className="Todo">
@@ -58,9 +65,19 @@ class NewTask extends Component {
                     <FormControl margin="normal" required fullWidth>
                         <InputLabel htmlFor="status">Status:</InputLabel>
                         <Input id="status" name="status"
-                               autoComplete="status" autoFocus
+                               autoComplete="status"
                                value={this.state.status}
                                onChange={this.handleStatusChange}/>
+                    </FormControl>
+
+                    <br/>
+                    <br/>
+                    <FormControl margin="normal" required fullWidth>
+                        <InputLabel htmlFor="responsible">Responsible:</InputLabel>
+                        <Input id="responsible" name="responsible"
+                               autoComplete="responsible"
+                               value={this.state.responsible}
+                               onChange={this.handleResponsibleChange}/>
                     </FormControl>
 
                     <br/>
@@ -80,7 +97,7 @@ class NewTask extends Component {
                     <br/>
                     <br/>
                     <Link to={{pathname:"/tasks", props:{description:this.state.description,
-                            status:this.state.status, dueDate:this.state.dueDate }}}>
+                            status:this.state.status, responsible:this.state.responsible, dueDate:this.state.dueDate }}}>
                         <Button type="submit"
                                 fullWidth
                                 variant="contained"

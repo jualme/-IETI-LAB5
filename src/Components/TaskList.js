@@ -66,14 +66,13 @@ export class TaskList extends React.Component {
     handleSubmit() {
         //e.preventDefault();
         if (this.props.location.props){
-
             if (!this.props.location.props.description.length || !this.props.location.props.status.length || !this.props.location.props.dueDate)
                 return;
 
             const newItem = {
                 description: this.props.location.props.description,
                 status: this.props.location.props.status,
-                responsible: this.state.responsible,
+                responsible: {name: this.props.location.props.responsible, email:""},
                 dueDate: this.props.location.props.dueDate,
             };
 
@@ -81,6 +80,7 @@ export class TaskList extends React.Component {
                 items: prevState.items.concat(newItem),
                 description: '',
                 status: '',
+                responsible: {name: "", email:""} ,
                 dueDate: ''
             }), () => {localStorage.setItem("tasks", JSON.stringify(this.state.items) )});
         }
@@ -114,15 +114,21 @@ export class TaskList extends React.Component {
         return (
 
             <div>
-                <Link to={{pathname:"/NewTask"}}>
-                    <Fab color="primary" aria-label="add">
-                        <AddIcon />
-                    </Fab>
-                </Link>
-                <TaskFilter filter={this.handleFilter}/>
+
+
                 <Grid container spacing={4} className="grid-container">
                     {todoList}
                 </Grid>
+
+                <div style={{ position:"fixed", bottom:"20px", right:"15px"}}>
+                    <Link to={{pathname:"/NewTask"}}>
+                        <Fab color="primary" aria-label="add">
+                            <AddIcon />
+                        </Fab>
+                    </Link>
+                    <TaskFilter filter={this.handleFilter}/>
+                </div>
+
 
 
             </div>
