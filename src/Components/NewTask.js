@@ -71,10 +71,13 @@ class NewTask extends Component {
                 this.setState({status: ''})
                 this.setState({responsible: ''})
                 this.setState({responsibleEmail: ''})
+                window.location.href="/tasks"
             })
             .catch((error) => {
                 console.error('Error:', error);
             });
+
+
     }
 
     render() {
