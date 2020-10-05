@@ -13,47 +13,20 @@ export class TaskList extends React.Component {
     constructor(props) {
         super(props);
         this.state={
-            items: [],
-            description: '',
-            responsible: {name: localStorage.getItem("name"), email: localStorage.getItem("email")},
-            status: '',
-            dueDate: moment(),
+            userTasks:[],
             filter:{dueDate:"",
                 responsible:"",
                 status:"",}
         }
-        this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
-        this.handleStatusChange = this.handleStatusChange.bind(this);
-        this.handleDateChange = this.handleDateChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount() {
-        if (localStorage.getItem("tasks")){
-            this.setState({
-                    items: JSON.parse(localStorage.getItem("tasks"))
-                }
-            )
-        }
-        this.handleSubmit()
-    }
-
-    handleDescriptionChange(desc) {
-        this.setState({
-            description: desc
-        });
-    }
-
-    handleStatusChange(stat) {
-        this.setState({
-            status: stat
-        });
-    }
-
-    handleDateChange(date) {
-        this.setState({
-            dueDate: date
-        });
+        fetch('https://taskplannerv2.azurewebsites.net/api/list-tasks?code=aJTiHo7Fog2qBwr7IdTv/zL4yCUpol8INmfSfyz5dcaghnrToDgvbA==')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                this.setState({userTasks: data.response});
+            });
     }
 
     handleFilter = (filter) => {
@@ -62,35 +35,9 @@ export class TaskList extends React.Component {
         })
     }
 
-
-    handleSubmit() {
-        //e.preventDefault();
-        if (this.props.location.props){
-            if (!this.props.location.props.description.length || !this.props.location.props.status.length || !this.props.location.props.dueDate)
-                return;
-
-            const newItem = {
-                description: this.props.location.props.description,
-                status: this.props.location.props.status,
-                responsible: {name: this.props.location.props.responsible, email:""},
-                dueDate: this.props.location.props.dueDate,
-            };
-
-            this.setState(prevState => ({
-                items: prevState.items.concat(newItem),
-                description: '',
-                status: '',
-                responsible: {name: "", email:""} ,
-                dueDate: ''
-            }), () => {localStorage.setItem("tasks", JSON.stringify(this.state.items) )});
-        }
-    }
-
-
-
     render() {
 
-        const todoList = this.state.items.filter((value) => {
+        const todoList = this.state.userTasks.filter((value) => {
             let filter = this.state.filter
             let filtered = true
             if (filter.dueDate!==""){
@@ -114,7 +61,6 @@ export class TaskList extends React.Component {
         return (
 
             <div>
-
 
                 <Grid container spacing={4} className="grid-container">
                     {todoList}

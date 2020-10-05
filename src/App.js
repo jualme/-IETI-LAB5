@@ -28,20 +28,6 @@ class App extends Component {
         localStorage.setItem("isLoggedIn", this.state.isLoggedIn);
     }
 
-    componentDidMount() {
-        fetch('http://ja21086162.eastus.azurecontainer.io:8080/users')
-            .then(response => response.json())
-            .then(data => {
-                let usersList = [];
-                console.log(data)
-                data.forEach(function (user) {
-                    usersList.push({
-                        user
-                    })
-                });
-                this.setState({userList: usersList});
-            });
-    }
 
   render() {
       const LoginView = () => (
@@ -57,14 +43,6 @@ class App extends Component {
                       <img src={logo} className="App-logo" alt="logo"/>
                       <h1 className="App-title">Task Planner</h1>
                   </header>
-                  <ul>
-                      {this.state.userList.map( (value,index) => {console.log(value); return(<div key={index}>
-                              <h2>values from the api</h2>
-                          <li >{value.user.name}</li>
-                              <li>{value.user.email}</li>
-                          </div>
-                      )} )}
-                  </ul>
                   <div>
                       <Route exact path="/" component={LoginView}/>
                       <Route exact path="/newTask" component={NewTask}/>
