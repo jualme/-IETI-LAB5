@@ -9,6 +9,9 @@ import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import './Login.css'
+import axios from "axios";
+import jwt_decode from "jwt-decode";
+
 
 export class Login extends React.Component{
 
@@ -75,9 +78,22 @@ export class Login extends React.Component{
 
     handleSubmit = (event) => {
         event.preventDefault();
-        if(localStorage.getItem("email") === this.state.email && localStorage.getItem("password") === this.state.password){
-            this.props.changeIsLoggedIn();
-            window.location.href = "/tasks";
-        }
+        axios.post('http://localhost:8080/user/login', {
+            username: 'test@mail.com',
+            password: 'password'
+        })
+            .then(function (response) {
+                // Check if its possible to decode the token - validate
+                jwt_decode(response.data.accessToken)
+                localStorage.setItem("accessToken", response.data.accessToken)
+                console.log(response.data.accessToken);
+            })
+            .catch(function (error) {
+                console.log(error);
+            }, () => {
+                this.props.changeIsLoggedIn();
+                window.location.href = "/tasks";
+        });
+
     }
 }

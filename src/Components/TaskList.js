@@ -1,12 +1,12 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import './Tasks.css';
-import moment from "moment";
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import { Link } from 'react-router-dom';
 import Task from './Task'
 import TaskFilter from "./TaskFilter";
+import axios from "axios";
 
 export class TaskList extends React.Component {
 
@@ -21,12 +21,23 @@ export class TaskList extends React.Component {
     }
 
     componentDidMount() {
-        fetch('https://taskplannerv2.azurewebsites.net/api/list-tasks?code=aJTiHo7Fog2qBwr7IdTv/zL4yCUpol8INmfSfyz5dcaghnrToDgvbA==')
+        this.axios = axios.create({
+            baseURL: 'http://localhost:8080/api/',
+            timeout: 1000,
+            headers: {'Authorization': 'Bearer ' + localStorage.getItem("accessToken")}
+        });
+        this.axios.get("task/")
+            .then((response) => {
+                console.log(response.data);
+                this.setState({userTasks: response.data});
+            });
+
+        /*fetch('https://taskplannerv2.azurewebsites.net/api/list-tasks?code=aJTiHo7Fog2qBwr7IdTv/zL4yCUpol8INmfSfyz5dcaghnrToDgvbA==')
             .then(response => response.json())
             .then(data => {
                 console.log(data)
                 this.setState({userTasks: data.response});
-            });
+            });*/
     }
 
     handleFilter = (filter) => {

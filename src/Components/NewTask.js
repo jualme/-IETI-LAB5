@@ -6,7 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
 import moment from "moment";
-import {Link} from "react-router-dom";
+import axios from "axios";
 
 class NewTask extends Component {
     constructor(props) {
@@ -14,8 +14,8 @@ class NewTask extends Component {
         this.state = {
             description: '',
             status: '',
-            responsible:"",
-            responsibleEmail:"",
+            responsible: "",
+            responsibleEmail: "",
             dueDate: moment()
         }
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
@@ -25,13 +25,13 @@ class NewTask extends Component {
 
     handleDescriptionChange(e) {
         this.setState({
-            description:e.target.value
+            description: e.target.value
         })
     }
 
     handleStatusChange(e) {
         this.setState({
-            status:e.target.value
+            status: e.target.value
         })
     }
 
@@ -56,27 +56,34 @@ class NewTask extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        var data = { "description": this.state.description, "responsible": {"name": this.state.responsible, "email":this.state.responsibleEmail} , "status": this.state.status, "dueDate": this.state.dueDate }
-        fetch('https://taskplannerv2.azurewebsites.net/api/add-task?code=wVv06lDgupGeApPk7WXEzrwUFO70ZBicAabRT0NBEgcpxflEXPpjOg==', {
-            method: 'POST',
+        this.axios = axios.create({
+            baseURL: 'http://localhost:8080/api/',
+            timeout: 1000,
             headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data)
-                this.setState({description: ''})
-                this.setState({status: ''})
-                this.setState({responsible: ''})
-                this.setState({responsibleEmail: ''})
-                window.location.href="/tasks"
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+                'Authorization': 'Bearer ' + localStorage.getItem("accessToken"),
+                'Content-Type': 'application/json'
+            }
+        });
+        var data = {
+            "description": this.state.description,
+            "responsible": {"name": this.state.responsible, "email": this.state.responsibleEmail},
+            "status": this.state.status,
+            "dueDate": this.state.dueDate
+        }
 
+        this.axios.post("task/", JSON.stringify(data))
+            .then((response) => {
+                console.log(response);
+                this.setState({
+                    description: '',
+                    status: '',
+                    responsible: '',
+                    responsibleEmail: ''
+                })
+                window.location.href = "/tasks"
+            }, (error) => {
+                console.log(error);
+            });
 
     }
 
@@ -117,7 +124,7 @@ class NewTask extends Component {
                     <br/>
                     <br/>
                     <FormControl margin="normal" required fullWidth>
-                        <InputLabel htmlFor="responsibleEmail" >Responsible Email:</InputLabel>
+                        <InputLabel htmlFor="responsibleEmail">Responsible Email:</InputLabel>
                         <Input id="responsibleEmail" name="responsibleEmail"
                                autoComplete="responsible_Email"
                                value={this.state.responsibleEmail}
@@ -141,15 +148,15 @@ class NewTask extends Component {
                     <Divider variant="fullWidth"/>
                     <br/>
                     <br/>
-                        <Button type="submit"
-                                fullWidth
-                                variant="contained"
-                                color="primary"
-                                className="submit"
-                                onClick={this.handleSubmit}
-                                >
-                            Add
-                        </Button>
+                    <Button type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className="submit"
+                            onClick={this.handleSubmit}
+                    >
+                        Add
+                    </Button>
 
 
                 </div>
